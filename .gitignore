@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+*.so
+*.pt
+*.bin
+*.safetensors
+assets/generated_*
+assets/*.mp4
+assets/*.png
