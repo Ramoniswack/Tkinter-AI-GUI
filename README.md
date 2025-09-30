@@ -15,9 +15,16 @@ Requirements
 
 This guide assumes a Linux environment and a zsh shell. Commands are copy-paste ready for that setup.
 
-- Python 3.10 or newer is recommended. The code was developed with Python 3.12 but should work with recent 3.x versions.
-- Git
-- A modern CPU. For better image generation performance, a CUDA GPU with recent drivers and an appropriate PyTorch build will help.
+Core (required)
+
+- Python 3.10 or newer (Python 3.12 recommended).
+- Git (to clone and work with the repository).
+- A working shell (zsh / bash) and a stable internet connection to download model weights.
+
+Optional (only if you plan to use a GPU or extra accelerators)
+
+- CUDA-capable NVIDIA GPU and matching drivers — only required if you want GPU acceleration for large models. Not required to run the app in CPU mode.
+- Optional acceleration libraries such as `xformers` or vendor-specific builds of PyTorch. Install these only when you have compatible hardware and matching binaries.
 
 Quick start
 
@@ -28,7 +35,7 @@ git clone <your-repo-url> tk-hf-gui
 cd tk-hf-gui
 ```
 
-2. Create and activate a virtual environment
+2. Create and activate a virtual environment (recommended)
 
 ```bash
 python3 -m venv .venv
@@ -45,42 +52,31 @@ Upgrade pip and install wheel tools
 python3 -m pip install --upgrade pip setuptools wheel
 ```
 
-CPU only installation (no CUDA)
+Python packages
+
+1. Upgrade pip and core build tools
 
 ```bash
-python3 -m pip install --upgrade pip
-python3 -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+python -m pip install --upgrade pip setuptools wheel
 ```
 
-CUDA GPU installation examples
+2. Install PyTorch
 
-Pick the line that matches your CUDA driver. If you are not sure, consult https://pytorch.org/get-started/locally for the command tailored to your system.
-
-CUDA 11.8 example
+- If you do not have a CUDA GPU, install the CPU-only wheels (recommended for machines without NVIDIA GPUs):
 
 ```bash
-python3 -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 ```
 
-CUDA 12.1 example
+- If you have an NVIDIA GPU and want GPU acceleration, install the PyTorch wheel that matches your CUDA driver (see https://pytorch.org/get-started/locally). This is optional — the app works without a GPU.
+
+3. Install the remaining Python packages used by the project
 
 ```bash
-python3 -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+python -m pip install -r requirements.txt
 ```
 
-Install the remaining Python packages required by this project
-
-```bash
-python3 -m pip install transformers diffusers accelerate safetensors pillow imageio imageio-ffmpeg
-# optional: xformers can speed up some pipelines if available for your Python and CUDA versions
-# python3 -m pip install xformers
-```
-
-Optional: install from the requirements file (this will install the packages listed there)
-
-```bash
-python3 -m pip install -r requirements.txt
-```
+The `requirements.txt` contains the core Python packages the project needs (transformers, diffusers, pillow, etc.). Optional accelerators such as `xformers` should only be installed when your hardware and Python/CUDA versions are compatible.
 
 System packages you may need
 
@@ -88,7 +84,7 @@ System packages you may need
 # ffmpeg is required for video encoding and decoding
 sudo apt update
 sudo apt install -y ffmpeg git-lfs
-# after installing git-lfs, run
+# after installing git-lfs, run once per user
 git lfs install
 ```
 
@@ -104,13 +100,14 @@ Model weights are downloaded into your user cache by default. If you need to rel
 
 Notes about optional packages
 
-- For faster memory usage and speed on compatible systems, you may want to install xformers or other optional accelerators. Install them only if your environment supports it.
-- If you plan to use GPU acceleration, install a PyTorch build that matches your CUDA driver. See https://pytorch.org for instructions.
+- `xformers` and other accelerator libraries can improve speed and memory usage on supported hardware. Install them only if you have a compatible GPU and matching Python/CUDA binaries.
+- GPU usage is optional. If you have no GPU or do not want to install CUDA drivers, use the CPU-only PyTorch wheels above. Expect slower image generation on CPU.
 
 Run the application
 
 ```bash
 source .venv/bin/activate
+python -m pip install -r requirements.txt  # ensure deps installed
 python3 app.py
 ```
 
