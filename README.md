@@ -147,28 +147,7 @@ How the adapters and UI work together
 - The GUI gathers input from `InputFrame.get_payload()` and normalizes it to a simple string where appropriate. The adapter `run()` method receives the normalized input and returns a dictionary with at least a `result` string and optional preview keys such as `image_path` or `video_path`.
 - The `OutputFrame` shows textual results and renders a preview of the media returned by adapters.
 
-Team and roles
 
-Project members
-
-- milansapkota16-lang
-- bishalnayabha0
-- lovesonpok
-- suman2120
-
-Suggested roles and responsibilities
-
-- lovesonpok - Project lead and lead backend and performance engineer. He is the main point of contact for architecture decisions and backend implementation. Responsibilities: lead the overall design, implement and optimize model adapters, tune performance for CPU and GPU, manage optional acceleration packages, and coordinate integration testing on target hardware.
-- milansapkota16-lang - Developer and integrator. Responsibilities: work with the lead on adapter design, implement features across adapters, and help with integration and testing.
-- bishalnayabha0 - UI and user experience lead. Responsibilities: Tkinter layout, input/output widgets, preview behavior, accessibility, and theme tuning.
-- suman2120 - Documentation and testing lead. Responsibilities: README and docs, local setup instructions, troubleshooting guides, and writing small unit or smoke tests to catch regressions.
-
-How the team works together
-
-- Feature design and task assignment: team members discuss a feature or issue, then a single member implements the first version and opens a short description in the project issue tracker or a local task list.
-- Review cycle: another team member reviews the change for correctness, style, and UI/UX. The reviewer runs the code locally and provides feedback. Small suggested edits are applied directly.
-- Integration and testing: the integrator runs the app on a target machine, verifies behavior for CPU and GPU if available, and finalizes the change.
-- Documentation and hand-off: the documentation lead updates the README or inline docs describing any configuration changes or new optional dependencies.
 
 Development notes and tips
 
